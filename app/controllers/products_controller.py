@@ -70,5 +70,22 @@ def register_route(app):
         product_list = [product.to_dict() for product in products]
 
         return jsonify(product_list), 200
+    
+    # Get seller products
+    @app.route('/products/seller', methods=['GET'])
+    @jwt_required()
+    def get_products():
+        user_id = get_jwt_identity()['id']
+        # Start with the base query
+        query = Product.query
+        query = query.filter(Product.seller_id == user_id)
+
+        # Execute the query and get results
+        products = query.all()
+
+        # Convert results to JSON-friendly format
+        product_list = [product.to_dict() for product in products]
+
+        return jsonify(product_list), 200
 
 
