@@ -23,5 +23,6 @@ class Order(db.Model):
             'product': self.product.to_dict(),
             'quantity': self.quantity,
             'total_price': self.total_price,
-            'cancelled_at': self.cancelled_at
+            'cancelled_at': self.cancelled_at,
+            'created_at': self.created_at
         }

@@ -16,7 +16,7 @@ def create_app():
     CORS(app, resources={r"/*": {"origins": ["http://localhost:3000"]}})
     db.init_app(app)
     migrate.init_app(app, db)
-    from .models import User,CartItem,Seller,ProductCategory,ProductMedia,ProductMediaType,Product,Order
+    from .models import User,CartItem,Seller,ProductCategory,Product,Order
     jwt.init_app(app)
     app.debug = True  # Enable debug mode
     @app.route('/', methods=['GET'])
