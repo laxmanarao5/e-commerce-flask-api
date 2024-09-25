@@ -13,7 +13,7 @@ class Product(db.Model):
     seller_id = db.Column(db.Integer, db.ForeignKey('sellers.id'), nullable=False)  # Foreign key to the Seller model
     category_id = db.Column(db.Integer, db.ForeignKey('categories.id'), nullable=False)  # Foreign key to the Category model
     deleted_at = db.Column(db.DateTime)
-    media = db.relationship('ProductMedia', back_populates='product')
+    images = db.relationship('ProductImages', back_populates='product')
     orders = db.relationship('Order', backref='product_orders', lazy=True)
     seller = db.relationship('Seller', backref='product_details', lazy=True)
 
@@ -29,5 +29,5 @@ class Product(db.Model):
             'stock': self.stock,
             'seller_id': self.seller_id,
             'category_id': self.category_id,
-            'media': self.media
+            'images': [image.to_dict() for image in self.images]
         }

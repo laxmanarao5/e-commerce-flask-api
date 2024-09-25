@@ -1,6 +1,6 @@
 from flask import jsonify, request
 from .. import db
-from app.models import Order,CartItem
+from app.models import Order,CartItem,Product
 from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity, get_jwt
 from datetime import datetime
 def register_route(app):
@@ -24,6 +24,15 @@ def register_route(app):
                 status = 'Shipped',
                 created_at= datetime.utcnow(),
                 total_price=cart_item.product.price * cart_item.quantity,
+            )
+            product = Product.query.filter(
+            Product.id ==cart_item.product_id 
+            )
+            # if(product.stock < cart_item.quantity):
+            #     return jsonify({"message":"One or more items in your cart are out of stock"}), 400
+            product.update(
+                {Product.stock: Product.stock - cart_item.quantity},
+                synchronize_session='fetch'
             )
             db.session.add(order)
             # Deleting item in cart

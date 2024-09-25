@@ -16,6 +16,5 @@ class ProductCategory(db.Model):
             'id': self.id,
             'name': self.name,
             'created_at': self.created_at,
-            'updated_at': self.updated_at,
-            'products': [product.to_dict() for product in self.products]
+            'updated_at': self.updated_at
         }
